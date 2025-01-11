@@ -1,0 +1,40 @@
+<div *ngIf="loading;then load else page"></div>
+
+<ng-template #load>
+  <div class="text-center w-100 bg-white p-5">
+    <app-spinner></app-spinner>
+  </div>
+</ng-template>
+
+<ng-template #page>
+  <div [formGroup]="form">
+    <label for="">Question:</label>
+    <textarea class="form-control" formControlName="question" rows="6" dir="rtl"></textarea>
+    <app-latex [content]="form.value.question"></app-latex>
+    <label for="">Answer:</label>
+    <textarea class="form-control" formControlName="answer" rows="6" dir="rtl"></textarea>
+    <app-latex [content]="form.value.answer"></app-latex>
+    <label for="">Reasoning:</label>
+    <textarea class="form-control" formControlName="reason" rows="6" dir="rtl"></textarea>
+  </div>
+
+  <app-upload></app-upload>
+
+  <button class="btn btn-primary my-2" (click)="addRecord()">Save</button>
+
+  <div class="alert alert-danger" *ngIf="errorMessage != null">{{ errorMessage }}</div>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true" id="liveToast" *ngIf="showToast">
+      <div class="toast-header">
+        <strong class="me-auto">New Record Added</strong>
+        <small>3ash, ya wa7sh 💪💪💪</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close" (click)="showToast = false"></button>
+      </div>
+      <div class="toast-body">
+        Saved Record Successfully
+      </div>
+    </div>
+  </div>
+</ng-template>
+

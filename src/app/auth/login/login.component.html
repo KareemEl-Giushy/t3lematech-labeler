@@ -1,0 +1,21 @@
+<div *ngIf="loading;then load else page"></div>
+
+<ng-template #load>
+  <div class="text-center w-100 bg-white p-5">
+    <app-spinner></app-spinner>
+  </div>
+</ng-template>
+
+<ng-template #page>
+  <div class="border rounded p-4 col col-md-6 mx-auto" [formGroup]="form">
+      <h2 class="text-center">Login</h2>
+      <div class="alert alert-danger m-2" *ngIf="errorMessage != null">{{ errorMessage }}</div>
+    <label for="">Email:</label>
+    <input type="text" class="form-control mb-2" placeholder="example@email.com" autocomplete="email" formControlName="email">
+    <label for="">Password:</label>
+    <input type="password" class="form-control mb-2" placeholder="*****" formControlName="password">
+    <button class="btn btn-success my-1" (click)="login()">Login</button>
+
+    <div>Made With ❤️ By Kareem</div>
+  </div>
+</ng-template>
