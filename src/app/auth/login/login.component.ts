@@ -42,7 +42,6 @@ export class LoginComponent implements OnInit {
 
     this.auth.firebaseLogin(this.form.value.email, this.form.value.password).subscribe({
       next: (resp) => {
-        this.loading = false;
         console.log(resp);
         this.router.navigateByUrl("labeler");
       },
@@ -50,5 +49,6 @@ export class LoginComponent implements OnInit {
         this.errorMessage = err.code;
       }
     });
+    this.loading = false;
   }
 }

@@ -56,13 +56,13 @@ export class DataAdderComponent implements OnInit {
           this.showToast = true;
           console.log(res);
           this.form.reset();
-          this.loading = false
       },
       error: err => {
         this.showToast = false;
         this.errorMessage = err.code
       }
-    })
+    });
+    this.loading = false
   }
 
 }
