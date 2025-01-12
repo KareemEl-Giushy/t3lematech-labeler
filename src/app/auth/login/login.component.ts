@@ -32,6 +32,12 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    if(!this.form.valid) {
+      this.errorMessage = "In Valid Login";
+
+      return;
+    }
+
     this.loading = true;
 
     this.auth.firebaseLogin(this.form.value.email, this.form.value.password).subscribe({
