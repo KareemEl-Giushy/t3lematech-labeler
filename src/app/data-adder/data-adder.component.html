@@ -10,19 +10,31 @@
   <div [formGroup]="form">
     <label for="">Question:</label>
     <textarea class="form-control" formControlName="question" rows="6" dir="rtl"></textarea>
+    <div class="text-danger" *ngIf="form.controls['question'].invalid && form.controls['question'].dirty">
+      <span *ngIf="form.controls['question'].errors?.['required']">This Field is Required</span>
+      <span *ngIf="form.controls['question'].errors?.['minlength']">The problem needs to be at least 5 Characters</span>
+    </div>
     <app-latex [content]="form.value.question"></app-latex>
     <label for="">Answer:</label>
     <textarea class="form-control" formControlName="answer" rows="6" dir="rtl"></textarea>
+    <div class="text-danger" *ngIf="form.controls['answer'].invalid && form.controls['answer'].dirty">
+      <span *ngIf="form.controls['answer'].errors?.['required']">This Field is Required</span>
+      <span *ngIf="form.controls['answer'].errors?.['minlength']">The answer needs to be at least 1 Character</span>
+    </div>
     <app-latex [content]="form.value.answer"></app-latex>
     <label for="">Reasoning:</label>
     <textarea class="form-control" formControlName="reason" rows="6" dir="rtl"></textarea>
+    <div class="text-danger" *ngIf="form.controls['reason'].invalid && form.controls['reason'].dirty">
+      <span *ngIf="form.controls['reason'].errors?.['required']">This Field is Required</span>
+      <span *ngIf="form.controls['reason'].errors?.['minlength']">The reason needs to be at least 5 Characters</span>
+    </div>
   </div>
 
   <app-upload></app-upload>
 
-  <button class="btn btn-primary my-2" (click)="addRecord()">Save</button>
+  <div class="alert alert-danger mt-2" *ngIf="errorMessage != null">{{ errorMessage }}</div>
 
-  <div class="alert alert-danger" *ngIf="errorMessage != null">{{ errorMessage }}</div>
+  <button class="btn btn-primary my-2" (click)="addRecord()">Save</button>
 
   <div class="toast-container position-fixed bottom-0 end-0 p-3">
     <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true" id="liveToast" *ngIf="showToast">

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../service/auth.service';
 import { FirestoreService } from './service/firestore.service';
 import PromptRecord from '../models/record';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-data-adder',
@@ -15,42 +15,46 @@ export class DataAdderComponent implements OnInit {
 
   loading: boolean = false;
 
-  form: FormGroup = new FormGroup("");
+  form: FormGroup = new FormGroup({
+    question: new FormControl("", [Validators.required, Validators.minLength(5)]),
+    answer: new FormControl("", [Validators.required, Validators.minLength(1)]),
+    reason: new FormControl("", [Validators.required, Validators.minLength(5)])
+  });
 
   showToast: boolean = false;
 
   errorMessage: string | null = null;
 
-  constructor(private router: Router, private store: FirestoreService, private builder: FormBuilder) {}
+  constructor(private router: Router, private store: FirestoreService) {}
 
   ngOnInit(): void {
     this.authService.user$.subscribe(user => {
       if (!user) {
         this.router.navigateByUrl("login");
       }
-    })
-
-    this.form = this.builder.group({
-      question: ["", Validators.required, Validators.minLength(5)],
-      answer: ["", Validators.required, Validators.minLength(1)],
-      reason: ["", Validators.required, Validators.minLength(5)]
     });
   }
 
   addRecord() {
+    if(!this.form.valid) {
+      this.errorMessage = "Please Fix Entry Problems";
+
+      return;
+    }
 
     this.loading = true;
 
     let record: PromptRecord = {
       question: this.form.value.question,
       answer: this.form.value.answer,
-      reason: this.form.value.reason
+      reason: this.form.value.reason,
     }
 
     this.store.addRecord(record).subscribe({
       next: res => {
           this.showToast = true;
           console.log(res);
+          this.form.reset();
           this.loading = false
       },
       error: err => {
