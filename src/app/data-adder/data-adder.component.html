@@ -32,7 +32,10 @@
 
   <app-upload></app-upload>
 
-  <div class="alert alert-danger mt-2" *ngIf="errorMessage != null">{{ errorMessage }}</div>
+  <div class="alert alert-danger mt-2" *ngIf="errorMessage != null">
+    {{ errorMessage }}
+    <button type="button" class="btn-close" (click)="errorMessage = null"></button>
+  </div>
 
   <button class="btn btn-primary my-2" (click)="addRecord()">Save</button>
 
