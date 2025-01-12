@@ -60,9 +60,4 @@ export class DataAdderComponent implements OnInit {
     })
   }
 
-  logout() {
-    this.authService.logout();
-    this.router.navigateByUrl("login");
-  }
-
 }

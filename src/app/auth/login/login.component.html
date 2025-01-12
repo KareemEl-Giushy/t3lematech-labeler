@@ -12,8 +12,16 @@
       <div class="alert alert-danger m-2" *ngIf="errorMessage != null">{{ errorMessage }}</div>
     <label for="">Email:</label>
     <input type="text" class="form-control mb-2" placeholder="example@email.com" autocomplete="email" formControlName="email">
+    <div class="text-danger" *ngIf="form.controls['email'].invalid && form.controls['email'].dirty">
+      <span *ngIf="form.controls['email'].errors?.['required']">Email is Required</span>
+      <span *ngIf="form.controls['email'].errors?.['email']">Needs to be valid Email</span>
+    </div>
     <label for="">Password:</label>
     <input type="password" class="form-control mb-2" placeholder="*****" formControlName="password">
+    <div class="text-danger" *ngIf="form.controls['password'].invalid && form.controls['password'].dirty">
+      <span *ngIf="form.controls['password'].errors?.['required']">Password is Required</span>
+      <span *ngIf="form.controls['password'].errors?.['minlength']">Needs to be more than 5 Characters</span>
+    </div>
     <button class="btn btn-success my-1" (click)="login()">Login</button>
 
     <div>Made With ❤️ By Kareem</div>

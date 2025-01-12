@@ -1,5 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from './service/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,7 @@ import { AuthService } from './service/auth.service';
 })
 export class AppComponent implements OnInit {
   authService = inject(AuthService)
+  router = inject(Router)
 
   ngOnInit(): void {
     this.authService.user$.subscribe(user => {
@@ -19,6 +21,11 @@ export class AppComponent implements OnInit {
         this.authService.currentUserSig.set(null);
       }
     })
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigateByUrl("login");
   }
 
   title = 't3lematech-labeler';
