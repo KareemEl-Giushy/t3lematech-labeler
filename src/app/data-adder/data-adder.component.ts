@@ -48,6 +48,7 @@ export class DataAdderComponent implements OnInit {
       question: this.form.value.question,
       answer: this.form.value.answer,
       reason: this.form.value.reason,
+      createdAt: (new Date()).toString()
     }
 
     this.store.addRecord(record).subscribe({

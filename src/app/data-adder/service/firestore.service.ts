@@ -17,7 +17,8 @@ export class FirestoreService {
     let prom = addDoc(col, {
       question: record.question,
       answer: record.answer,
-      reason: record.reason
+      reason: record.reason,
+      createdAt: record.createdAt
     })
 
     return from(prom)
