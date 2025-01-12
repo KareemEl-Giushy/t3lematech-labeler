@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     if(!this.form.valid) {
-      this.errorMessage = "In Valid Login";
+      this.errorMessage = "Invalid Login";
 
       return;
     }
