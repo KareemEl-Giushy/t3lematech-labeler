@@ -8,26 +8,51 @@
 
 <ng-template #page>
   <div [formGroup]="form">
-    <label for="">Question:</label>
-    <textarea class="form-control" formControlName="question" rows="6" dir="rtl"></textarea>
+    <div class="row justify-content-space-between">
+      <div class="col">
+        <label for="">Question:</label>
+      </div>
+      <div class="col-10"></div>
+      <div class="col p-1">
+        <a class="btn btn-outline-dark py-0" (click)="changeLang(direction[0])">{{ direction[0].lang }}</a>
+      </div>
+    </div>
+    <textarea class="form-control" formControlName="question" rows="6" [attr.dir]="direction[0].dir"></textarea>
     <div class="text-danger" *ngIf="form.controls['question'].invalid && form.controls['question'].dirty">
       <span *ngIf="form.controls['question'].errors?.['required']">This Field is Required</span>
       <span *ngIf="form.controls['question'].errors?.['minlength']">The problem needs to be at least 5 Characters</span>
     </div>
     <app-latex [content]="form.value.question"></app-latex>
-    <label for="">Answer:</label>
-    <textarea class="form-control" formControlName="answer" rows="6" dir="rtl"></textarea>
+    <div class="row justify-content-space-between">
+      <div class="col">
+        <label for="">Answer:</label>
+      </div>
+      <div class="col-10"></div>
+      <div class="col p-1">
+        <a class="btn btn-outline-dark py-0" (click)="changeLang(direction[1])">{{ direction[1].lang }}</a>
+      </div>
+    </div>
+    <textarea class="form-control" formControlName="answer" rows="6" [attr.dir]="direction[1].dir"></textarea>
     <div class="text-danger" *ngIf="form.controls['answer'].invalid && form.controls['answer'].dirty">
       <span *ngIf="form.controls['answer'].errors?.['required']">This Field is Required</span>
       <span *ngIf="form.controls['answer'].errors?.['minlength']">The answer needs to be at least 1 Character</span>
     </div>
     <app-latex [content]="form.value.answer"></app-latex>
-    <label for="">Reasoning:</label>
-    <textarea class="form-control" formControlName="reason" rows="6" dir="rtl"></textarea>
+    <div class="row justify-content-space-between">
+      <div class="col">
+        <label for="">Reasoning:</label>
+      </div>
+      <div class="col-10"></div>
+      <div class="col p-1">
+        <a class="btn btn-outline-dark py-0" (click)="changeLang(direction[2])">{{ direction[2].lang }}</a>
+      </div>
+    </div>
+    <textarea class="form-control" formControlName="reason" rows="6" [attr.dir]="direction[2].dir"></textarea>
     <div class="text-danger" *ngIf="form.controls['reason'].invalid && form.controls['reason'].dirty">
       <span *ngIf="form.controls['reason'].errors?.['required']">This Field is Required</span>
       <span *ngIf="form.controls['reason'].errors?.['minlength']">The reason needs to be at least 5 Characters</span>
     </div>
+    <app-latex [content]="form.value.reason"></app-latex>
   </div>
 
   <app-upload></app-upload>
