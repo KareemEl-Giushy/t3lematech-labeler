@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, addDoc, collection, getDocs } from '@angular/fire/firestore';
+import { DocumentReference, Firestore, QueryDocumentSnapshot, addDoc, collection, endBefore, getCountFromServer, getDoc, getDocs, limit, limitToLast, orderBy, query, startAfter, startAt } from '@angular/fire/firestore';
 import { from } from 'rxjs';
 import PromptRecord from 'src/app/models/record';
 
@@ -8,21 +8,46 @@ import PromptRecord from 'src/app/models/record';
 })
 export class FirestoreService {
 
+  dataRef = collection(this.store, "data");
+
+  limit: number = 10;
+
   constructor(private store: Firestore) { }
 
-  getAllRecords(){
-    let col = collection(this.store, "data");
+  getRecordsCount() {
+    let q = query(this.dataRef, orderBy("createdAt"));
 
-    let records = getDocs(col);
+    let count = getCountFromServer(q);
+
+    return from(count);
+  }
+
+  getInitRecords(){
+    let q = query(this.dataRef, orderBy("createdAt"), limit(this.limit));
+
+    let records = getDocs(q);
 
     return from(records);
   }
 
+  getNextRecords(last: QueryDocumentSnapshot) {
+    let q = query(this.dataRef, orderBy("createdAt"), startAfter(last), limit(this.limit));
+
+    let records = getDocs(q);
+
+    return from(records)
+  }
+
+  getPrevRecords(first: QueryDocumentSnapshot) {
+      let q = query(this.dataRef, orderBy('createdAt'), endBefore(first), limitToLast(this.limit));
+
+      let records = getDocs(q);
+
+      return from(records)
+  }
+
   addRecord(record: PromptRecord) {
-
-    let col = collection(this.store, "data")
-
-    let prom = addDoc(col, {
+    let prom = addDoc(this.dataRef, {
       question: record.question,
       answer: record.answer,
       reason: record.reason,

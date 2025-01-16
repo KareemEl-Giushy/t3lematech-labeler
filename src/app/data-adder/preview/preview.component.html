@@ -1,9 +1,9 @@
-<table class="table mt-3">
+<table class="table mt-3 table-striped">
   <thead>
     <tr>
-      <th scope="col">Qeustion</th>
-      <th scope="col">Answer</th>
-      <th scope="col">Reason</th>
+      <th scope="col">Data</th>
+      <!-- <th scope="col">Answer</th> -->
+      <!-- <th scope="col">Reason</th> -->
       <th scope="col">Action</th>
     </tr>
   </thead>
@@ -11,15 +11,11 @@
     <tr *ngFor="let r of records">
       <td>
         <app-latex [content]="r.question"></app-latex>
-      </td>
-      <td>
         <app-latex [content]="r.answer"></app-latex>
-      </td>
-      <td>
         <app-latex [content]="r.reason"></app-latex>
       </td>
       <th scope="row">
-        <a class="btn btn-primary" (click)="edit()">Edit</a>
+        <a class="btn btn-primary" routerLink="/edit/{{ r.id }}">Edit</a>
       </th>
     </tr>
     <tr *ngIf="records.length < 1" class="text-center">
@@ -31,19 +27,16 @@
 </table>
 
 
-<nav aria-label="Page navigation example">
+<nav aria-label="Page navigation" *ngIf="pageCount != 0">
   <ul class="pagination">
     <li class="page-item">
-      <a class="page-link" href="#" aria-label="Previous">
+      <a class="page-link" aria-label="Previous" (click)="getPrevious()" [class.disabled]="firstRecordRef == null">
         <span aria-hidden="true">&laquo;</span>
         <span class="sr-only">Previous</span>
       </a>
     </li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
     <li class="page-item">
-      <a class="page-link" href="#" aria-label="Next">
+      <a class="page-link" aria-label="Next" (click)="getNext()" [class.disabled]="lastRecordRef == null">
         <span aria-hidden="true">&raquo;</span>
         <span class="sr-only">Next</span>
       </a>

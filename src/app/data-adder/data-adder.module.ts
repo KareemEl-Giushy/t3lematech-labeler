@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PreviewComponent } from './preview/preview.component';
 import { SharedModule } from '../shared/shared.module';
 import { UploadComponent } from './upload/upload.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { UploadComponent } from './upload/upload.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    RouterModule
   ]
 })
 export class DataAdderModule { }
