@@ -5,6 +5,11 @@ import { FirestoreService } from './service/firestore.service';
 import PromptRecord from '../models/record';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+enum Lang {
+  EN = "EN",
+  AR = "AR"
+}
+
 @Component({
   selector: 'app-data-adder',
   templateUrl: './data-adder.component.html',
@@ -14,6 +19,21 @@ export class DataAdderComponent implements OnInit {
   authService = inject(AuthService);
 
   loading: boolean = false;
+
+  direction: {lang: Lang, dir: string}[] = [
+    {
+      lang: Lang.EN,
+      dir: "ltr"
+    },
+    {
+      lang: Lang.EN,
+      dir: "ltr"
+    },
+    {
+      lang: Lang.EN,
+      dir: "ltr"
+    }
+  ];
 
   form: FormGroup = new FormGroup({
     question: new FormControl("", [Validators.required, Validators.minLength(5)]),
@@ -33,6 +53,16 @@ export class DataAdderComponent implements OnInit {
         this.router.navigateByUrl("login");
       }
     });
+  }
+
+  changeLang(item: any): void {
+    if(item.lang == Lang.AR) {
+      item.lang = Lang.EN
+      item.dir = "ltr"
+    }else {
+      item.lang = Lang.AR
+      item.dir = "rtl"
+    }
   }
 
   addRecord() {
