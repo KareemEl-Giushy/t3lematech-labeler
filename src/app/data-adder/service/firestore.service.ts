@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, addDoc, collection } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, getDocs } from '@angular/fire/firestore';
 import { from } from 'rxjs';
 import PromptRecord from 'src/app/models/record';
 
@@ -9,6 +9,14 @@ import PromptRecord from 'src/app/models/record';
 export class FirestoreService {
 
   constructor(private store: Firestore) { }
+
+  getAllRecords(){
+    let col = collection(this.store, "data");
+
+    let records = getDocs(col);
+
+    return from(records);
+  }
 
   addRecord(record: PromptRecord) {
 
