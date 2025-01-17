@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DocumentReference, Firestore, QueryDocumentSnapshot, addDoc, collection, endBefore, getCountFromServer, getDoc, getDocs, limit, limitToLast, orderBy, query, startAfter, startAt } from '@angular/fire/firestore';
+import { DocumentReference, Firestore, QueryDocumentSnapshot, addDoc, collection, doc, endBefore, getCountFromServer, getDoc, getDocs, limit, limitToLast, orderBy, query, startAfter, startAt, updateDoc } from '@angular/fire/firestore';
 import { from } from 'rxjs';
 import PromptRecord from 'src/app/models/record';
 
@@ -55,6 +55,25 @@ export class FirestoreService {
     })
 
     return from(prom)
+  }
+
+  getRecord(id: string) {
+    const docRef = doc(this.dataRef, id);
+    const record = getDoc(docRef);
+
+    return from(record);
+  }
+
+  editRecord(id: string, record: PromptRecord) {
+    const docRef = doc(this.dataRef, id);
+    const rec = updateDoc(docRef, {
+      question: record.question,
+      answer: record.answer,
+      reason: record.reason,
+      createdAt: record.createdAt
+    });
+
+    return from(rec)
   }
 
 }

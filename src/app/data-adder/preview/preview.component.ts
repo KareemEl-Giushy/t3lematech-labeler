@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import PromptRecord from 'src/app/models/record';
 import { AuthService } from 'src/app/service/auth.service';
 import { FirestoreService } from '../service/firestore.service';
@@ -27,7 +27,7 @@ export class PreviewComponent implements OnInit{
       if (!user) {
         this.router.navigateByUrl("login");
       }
-    })
+    });
   }
 
   ngOnInit(): void {

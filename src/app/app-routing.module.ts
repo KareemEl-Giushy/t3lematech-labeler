@@ -14,6 +14,10 @@ const routes: Routes = [
     component: DataAdderComponent
   },
   {
+    path: "labeler/:id",
+    component: DataAdderComponent
+  },
+  {
     path: "preview",
     component: PreviewComponent
   },
